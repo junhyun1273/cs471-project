@@ -18,7 +18,7 @@ Finding the correlation between $k$-hop neighborhood of nodes and feature vector
 
 ### Details
 
-- Define $k$-hop neighborhood of a node $v \in V$ as $N_k(v) = \{u \in V : \text{dist}(u, v) \le k\}$
+- Define $k$-hop neighborhood of a node $v \in V$ as $N_k(v) = \{ u \in V : \text{dist}(u, v) \le k \} $
 - Define overlap between arbitrary two nodes $A, B \in V$ as $\text{overlap}=\frac{|N_k(A) \cap N_k(B)|}{|N_k(A) \cup N_k(B)|}$.
 - How to define over-smootheness?
   - over-smoothing problem means feature vectors becoming indistinguishable.
@@ -71,7 +71,7 @@ Furthermore, the curve of mean cosine similarity of feature vectors keeps its sh
 
 - Using the Karate and Cora datasets, extract feature vectors by varying the number of GCN layers using the previous method.
 - Divide feature vectors by class and calculate the mean and variance for each class.
-- Let $C=\{C_1, C_2, ..., C_l\}$ be a set of classes of dataset. For each class $C_i$, compute its mean $\boldsymbol{\mu_i}$ and variance $\boldsymbol{\sigma_i^2}$ of the feature vectors of class $C_i$ nodes.
+- Let $C= \{ C_1, C_2, ..., C_l \} $ be a set of classes of dataset. For each class $C_i$, compute its mean $\boldsymbol{\mu_i}$ and variance $\boldsymbol{\sigma_i^2}$ of the feature vectors of class $C_i$ nodes.
 - Calculate norm of the variance of the means $\| \text{Var}(\boldsymbol{\mu_i}) \|$ and the L2 norm of the variance vectors $\| \boldsymbol{\sigma_i^2} \|$ of each class.
 - Plot these values according to the number of layers.
 
