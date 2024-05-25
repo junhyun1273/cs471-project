@@ -1,12 +1,16 @@
 # CS471 Term Project
+> Team number: 47.
+> Members: 20190272 Junhyun Park, 20190605 Inho Jung, 20220554 Taeyoon Lee
+## Finding the optimal layer depth in GCN for best performance.
+---
 
 ## Introduction
-In the lecture, we learned node features of GNNs tend to become more similar with the increase of the network depth. This is known as the **over-smoothing** problem. Intuituvely, as the depth of network grows, the range over which nodes exchange information widens. As learning processes, local information get diluted, and the importance of global information increases, leading to the similarity of feature vectors for much more nodes. This naturally triggers a question: "How can we determine the depth of network to avoid the over-smoothing problem and optimize the learning process?"
+In the lecture, we learned node features of GNNs tend to become more similar with the increase of the network depth. This is known as the **over-smoothing** problem. Intuituvely, as the depth of network grows, the range over which nodes exchange information widens. As learning processes, local information get diluted, and the importance of global information increases, leading to the similarity of feature vectors for much more nodes. This triggers a natural question: "How can we determine the depth of network to avoid the over-smoothing problem and optimize the learning process?"
 
 In the case of GNNs, when the number of layers is $k$, then each node interacts with its $k$-hop neighborhoods. The extent of overlap between the $k$-hop neighborhoods of two nodes(receptive field) will determine how similar their feature vectors converge. We aim to investigate the relationship between the overlap of $k$-hop neighborhoods between nodes and the over-smoothing caused by network depth in GNNs.
 
 
-- **Objective: Investigate how to find the optimal number of layers of GCN in which over-smoothing problem least occur.**
+- **Objective: Investigate how to find the optimal number of layers of GCN in which over-smoothing problem least occur and get optimal result.**
 
 
 ## Exp 1
@@ -27,8 +31,13 @@ Finding the correlation between $k$-hop neighborhood of nodes and feature vector
 
 ### Results
 
-TDL.
+![exp1_result](./exp1_result.png)
 
+We found a tendency that mean neighbor overlap and mean cosine similarity have similar shape, while it does NOT hold in sparse graph.
+
+Furthermore, the curve of mean cosine similarity of feature vectors keeps its shape in both dense graph(Karate) and relatively sparse graph(Cora).
+
+---
 
 ## Exp 2
 
@@ -43,36 +52,43 @@ TDL.
 
 ### Results
 
+![](./node%2050.png)
+![](./node%20250.png)
 
 - Measurements become stable as $|V|$ increases.
 - Neighbor overlap measurement grows much slower than the mean of cosine-similarities in sparse density.
 - The overall mean of cosine-similarities on all combination of nodes cannot explain over-smoothness.
-
-
-- 밀도 -> 스무싱 영향 X (어느 정도 스케일 이상 그래프) 대부분 레이어 2~4 근방에서 떡상
-- k-neigh overlap -> 반대로 밀도에 의한 영향이 상당히 크다. (파란거) -> 이 지표는 스무싱을 설명하기 적절하지 못함.
-- 1의 사실로부터 새로운 가설: shallow layer일때 제일 최적임 (가장 급격히 올라가기 전. 대강 레이어 2-4 근방) -> 왜?
-  - 한계: 전체 조합에 대한 벡터간의 코사인 유사도 평균(cosine mean)이 커짐 => 모든 점이 한 방향으로 집중됨 => 분류가 어려워짐. 은 맞음
-  - 그러나 반대로 (cosine mean 작음 => 분류가 용이해짐). 은 틀림. 클래스별 분포 차이를 설명 못함.
-  - Feature vector가 분류 작업에 용이함을 보이려면 클래스별 분포가 서로 distinguishable해야 함. 즉, 클래스 평균 간 차이는 커야하고, 한 클래스 내 벡터들의 분산은 작아져야 함.
-
+- Graph density does not significantly affect smoothing beyond a certain scale (most graphs around layers 2-4).
+- The k-neighbor overlap(blue line) is significantly affected by density and is not suitable for explaining over-smoothing.
+- From this fact, a new hypothesis arises: **the optimal point is at shallow layers (around layers 2-4)**, before a rapid increase of similarity.
+  - **Limitation**: An increase in the overall mean of cosine similarities means all points converge in one direction, making classification difficult.
+  - However, a lower cosine mean does not necessarily make classification easier; it does not explain the differences in class distributions.
+  - For feature vectors to be useful for classification, class distributions should be distinguishable, meaning **the difference or variance between class means should be large, and the variance within a class should be small.**
+---
 ## Exp 3
-
-- Motivation: 상기 내용 참조
 
 ### Detail
 
-- Karate, Cora 데이터셋으로 앞선 방법과 동일하게 GCN 레이어 개수 바꿔가며 feature vector 추출
-- feature vector를 클래스별로 나누어 각각 평균, 분산 계산
-- 평균들의 분산을 계산/ 분산 벡터의 L2 norm 계산
-- 레이어 개수에 따라 위의 계산값 plot.
+- Using the Karate and Cora datasets, extract feature vectors by varying the number of GCN layers using the previous method.
+- Divide feature vectors by class and calculate the mean and variance for each class.
+- Let $C=\{C_1, C_2, ..., C_l\}$ be a set of classes of dataset. For each class $C_i$, compute its mean $\boldsymbol{\mu_i}$ and variance $\boldsymbol{\sigma_i^2}$ of the feature vectors of class $C_i$ nodes.
+- Calculate norm of the variance of the means $\| \text{Var}(\boldsymbol{\mu_i}) \|$ and the L2 norm of the variance vectors $\| \boldsymbol{\sigma_i^2} \|$ of each class.
+- Plot these values according to the number of layers.
 
 ### Result
 
-- 클래스별 variance vector norm을 layer 개수 별로 플롯했더니, 레이어 2~4정도에서 급격하게 떡락 -> variance는 작을 수록 분류하기 좋음.
-- 클래스별 mean vector들의 분산값은 레이어 개수가 커져도 위 그래프만큼 급격히 줄어들지 않음. mean의 분산은 반대로 작아질수록 분류에 불리하므로,
-- variance norm이 가장 급격히 줄어드는 부근까지만 레이어 개수를 쌓는 것이 가장 이상적임.
+![](./exp3_result.png)
 
+- (Right) When plotting the class-wise variance vector norm $\| \boldsymbol{\sigma_i^2} \|$ by the number of layers, there is a sharp drop around layers 2. **Lower class variance promotes better classification result.**
+- (Left) The variance of the class-wise mean vectors $\| \text{Var}(\boldsymbol{\mu_i}) \|$ does not decrease as sharply with more layers. **A lower variance of means is unfavorable for classification.**
+- Therefore, it is ideal to limit the number of layers to where the variance norm drops the most sharply (layer 2 in both cases).
 
-### Further Research
-- 왜 variance는 얕은 레이어에서 떡락함?
+---
+
+## Conclusion
+
+- The overall $k$-hop neighborhood overlap of nodes may affect the cosine similarity of feature vectors.
+- This tendency fits well in dense graph.
+- However, the overall mean of cosine similarity cannot explain the ease of classification task.
+- We investigated the classification task into two different points of view: closeness of mean vectors of classes, and vector variance in each class. To classify the classes easily, the mean vectors of class should be distinguishable and vector variance of each class should be lower.
+- Class variance usually drops rapidly when the depth of network is shallow, while the mean variance shows relatively slower decrease. This can explain why GCN usually works well in shallow network depth.
