@@ -92,3 +92,10 @@ Furthermore, the curve of mean cosine similarity of feature vectors keeps its sh
 - However, the overall mean of cosine similarity cannot explain the ease of classification task.
 - We investigated the classification task into two different points of view: closeness of mean vectors of classes, and vector variance in each class. To classify the classes easily, the mean vectors of class should be distinguishable and vector variance of each class should be lower.
 - Class variance usually drops rapidly when the depth of network is shallow, while the mean variance shows relatively slower decrease. This can explain why GCN usually works well in shallow network depth.
+---
+## Reference
+
+- https://medium.com/@xinyiwu98/oversmoothing-in-gnns-why-does-it-happen-so-fast-6bbe93ef97a7
+- https://networkx.org/documentation/stable/auto_examples/graph/plot_erdos_renyi.html
+- https://arxiv.org/pdf/2003.13663
+- https://arxiv.org/pdf/2201.12830
