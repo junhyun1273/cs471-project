@@ -71,7 +71,7 @@ Furthermore, the curve of mean cosine similarity of feature vectors keeps its sh
 
 - Using the Karate and Cora datasets, extract feature vectors by varying the number of GCN layers using the previous method.
 - Divide feature vectors by class and calculate the mean and variance for each class.
-- Let $C= \{ C_1, C_2, ..., C_l \} $ be a set of classes of dataset. For each class $C_i$, compute its mean $\boldsymbol{\mu_i}$ and variance $\boldsymbol{\sigma_i^2}$ of the feature vectors of class $C_i$ nodes.
+- Let $ C= \{ C_1, C_2, ..., C_l \} $ be a set of classes of dataset. For each class $C_i$, compute its mean $\boldsymbol{\mu_i}$ and variance $\boldsymbol{\sigma_i^2}$ of the feature vectors of class $C_i$ nodes.
 - Calculate norm of the variance of the means $\| \text{Var}(\boldsymbol{\mu_i}) \|$ and the L2 norm of the variance vectors $\| \boldsymbol{\sigma_i^2} \|$ of each class.
 - Plot these values according to the number of layers.
 
