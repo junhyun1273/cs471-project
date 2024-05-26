@@ -17,16 +17,15 @@ In the case of GNNs, when the number of layers is $k$, then each node interacts 
 Finding the correlation between $k$-hop neighborhood of nodes and feature vector smoothness.
 
 ### Details
-
+- Hypothesis:
+  - Nodes in GCN with $k$ layers interacts with its $k$-hop neighborhood.
+  - It is reasonable that $k$-hop neighborhood overlapping is highly related with its over-smoothing possibility.
 - Define $k$-hop neighborhood of a node $v \in V$ as $N_k(v) = \{ u \in V : \text{dist}(u, v) \le k \} $
 - Define overlap between arbitrary two nodes $A, B \in V$ as $\text{overlap}=\frac{|N_k(A) \cap N_k(B)|}{|N_k(A) \cup N_k(B)|}$.
 - How to define over-smootheness?
   - over-smoothing problem means feature vectors becoming indistinguishable.
   - Indistinguishability may be measured by cosine-similarity between vectors.
   - We compute the mean of cosine-similarity of all possible combinations of two nodes.
-- Hypothesis:
-  - Nodes in GCN with $k$ layers interacts with its $k$-hop neighborhood.
-  - It is reasonable that $k$-hop neighborhood overlapping is highly related with its over-smoothing possibility.
 - For the number of layers $k \in [1,10]$, compute the mean of $k$-hop neighbor overlap and the mean of cosine-similarity of feature vectors in all combinations of nodes.
 
 ### Results
