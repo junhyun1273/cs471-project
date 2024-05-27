@@ -1,7 +1,16 @@
-# CS471 Term Project
-> Team number: 47.
+# CS471 Term Project (2024 Spring)
+> Team number: 47
 > Members: 20190272 Junhyun Park, 20190605 Inho Jung, 20220554 Taeyoon Lee
 ## Finding the optimal layer depth in GCN for best performance.
+---
+
+## Note
+- **GPU is necessary to run the code.**
+- Upload the whole **Cora.zip** file in the directory when you run the project code.
+- To reproduce the same result, run all the cells in the order in google colab GPU session.
+- Running all the cells takes long time. (exp1 takes 30 minutes, exp2 takes 40 minutes in colab GPU session)
+- Our project code is open at: https://github.com/junhyun1273/cs471-project 
+
 ---
 
 ## Introduction
@@ -51,8 +60,8 @@ Furthermore, the curve of mean cosine similarity of feature vectors keeps its sh
 
 ### Results
 
-![](./node%2050.png)
-![](./node%20250.png)
+![](./exp2_result50.png)
+![](./exp2_result250.png)
 
 - Measurements become stable as $|V|$ increases.
 - Neighbor overlap measurement grows much slower than the mean of cosine-similarities in sparse density.
@@ -94,7 +103,6 @@ Furthermore, the curve of mean cosine similarity of feature vectors keeps its sh
 ---
 ## Reference
 
-- https://medium.com/@xinyiwu98/oversmoothing-in-gnns-why-does-it-happen-so-fast-6bbe93ef97a7
 - https://networkx.org/documentation/stable/auto_examples/graph/plot_erdos_renyi.html
 - https://arxiv.org/pdf/2003.13663
 - https://arxiv.org/pdf/2201.12830
